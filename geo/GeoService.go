@@ -50,16 +50,13 @@ func (S *GeoService) HandleGeoTask(a *GeoApp, task *GeoTask) error {
 		var cache = cache.CacheTask{}
 		cache.Key = fmt.Sprintf("geo.%s", task.IP)
 		app.Handle(a, &cache)
-		if cache.Result.Value != "" {
+		if cache.Result.Errno == 0 && cache.Result.Value != "" {
 			var v = Geo{}
 			err := json.Decode([]byte(cache.Result.Value), &v)
-			if err != nil {
-				task.Result.Errno = ERROR_GEO
-				task.Result.Errmsg = err.Error()
+			if err == nil {
+				task.Result.Geo = &v
 				return nil
 			}
-			task.Result.Geo = &v
-			return nil
 		}
 	}
 
