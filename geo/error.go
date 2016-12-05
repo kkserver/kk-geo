@@ -1,0 +1,7 @@
+package geo
+
+const ERROR_GEO = 0x9000
+
+const ERROR_GEO_NOIMPLEMENTS = ERROR_GEO + 1
+
+const ERROR_GEO_NOT_FOUND_IP = ERROR_GEO + 2
